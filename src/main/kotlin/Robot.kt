@@ -12,7 +12,7 @@ class Robot(
     var path = mutableListOf<Cell>()
     val pathTravelled = mutableListOf<Cell>()
     val realWorld =
-        Array(sizeOfWorld) { y -> BooleanArray(sizeOfWorld) { x -> false } }
+        Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
 
     //World of obstacles, true if is blocked
     val knownWorld = Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
@@ -233,5 +233,9 @@ class Robot(
         Direction.NORTH_EAST -> Cell(position.x + i, position.y - i)
         Direction.SOUTH_WEST -> Cell(position.x - i, position.y + i)
         Direction.SOUTH_EAST -> Cell(position.x + i, position.y + i)
+    }
+
+    fun printStats(prefix : String){
+        println("$prefix : $turnsCounter turns, $scansCounter scans, $distanceTravelled cells travelled")
     }
 }
