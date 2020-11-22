@@ -9,6 +9,7 @@ enum class Direction {
     NORTH_WEST;
 
     companion object {
+        const val numDirections = 8
         fun fromInt(value: Int): Direction {
             return when (value) {
                 0 -> NORTH
@@ -19,7 +20,7 @@ enum class Direction {
                 5 -> SOUTH_WEST
                 6 -> WEST
                 7 -> NORTH_WEST
-                else -> fromInt(value % 8)
+                else -> fromInt(Math.floorMod(value, numDirections))
             }
         }
     }

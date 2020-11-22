@@ -19,9 +19,9 @@ fun main() {
     robot.travel(false)
     println("-----------------------------------")
     twoSensors.travel(false)
-    println("Knowing robot : ${robotKnowsPath.distanceTravelled}, ${robotKnowsPath.pathTravelled}")
-    println("Exploring robot(NORTH x 1) : ${robot.distanceTravelled}, ${robot.pathTravelled}")
-    println("Exploring robot(NORTH x 3) : ${twoSensors.distanceTravelled}, ${twoSensors.pathTravelled}")
+    println("Knowing robot : ${robotKnowsPath.distanceTravelled},${robotKnowsPath.turnsCounter},${robotKnowsPath.scansCounter}, ${robotKnowsPath.pathTravelled}")
+    println("Exploring robot(NORTH x 1) : ${robot.distanceTravelled},${robot.turnsCounter},${robot.scansCounter}, ${robot.pathTravelled}")
+    println("Exploring robot(NORTH x 3) : ${twoSensors.distanceTravelled},${twoSensors.turnsCounter},${twoSensors.scansCounter}, ${twoSensors.pathTravelled}")
 
 }
 //turn, detect, move, detect

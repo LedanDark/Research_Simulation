@@ -24,6 +24,8 @@ class Robot(
     // Position 0,0 has a wall on it.
     var position = Cell(0, (sizeOfWorld - 1), 0)
     var distanceTravelled = 0
+    var turnsCounter = 0
+    var scansCounter = 0
     fun heuristic(cell: Cell): Int = max(
         abs(cell.x - goal.x),
         abs(cell.y - goal.y)
@@ -138,12 +140,12 @@ class Robot(
             return
         }
         var next = path.removeAt(0)
-        if (turnAndDetect(next)) {
+        while (turnAndDetect(next)) {
             resetCostmap()
             calculateStarPath()
             next = path.removeAt(0)
         }
-        move(next)
+        move(next)// TODO : Need to turn to this direction first....
         if (sensorsDetectsNewBlockage()) {
             resetCostmap()
             calculateStarPath()
@@ -152,11 +154,28 @@ class Robot(
 
     fun turnAndDetect(next: Cell): Boolean {
         val newDirection = position.directionTo(next)
+        var newBlockage = false
         if (orientation != newDirection) {
+            //Math.floorMod(diff,
             //TODO, IMPLEMENT stepwise turning.
-            orientation = newDirection
+            val clockwiseDistance = Math.floorMod(newDirection.ordinal - orientation.ordinal, Direction.numDirections)
+            val turningStep = if (clockwiseDistance <= 4) {
+                //println("Turning clockwise, $orientation -> $newDirection")
+                1
+            } else {
+                //println("Turning widdershins, $orientation -> $newDirection")
+                -1
+            }
+            while (orientation != newDirection) {
+                orientation = Direction.fromInt(orientation.ordinal + turningStep)
+                turnsCounter++
+                val stepBlockage = sensorsDetectsNewBlockage()
+                //println("New direction : $orientation : $stepBlockage")
+                newBlockage = newBlockage || stepBlockage
+            }
         }
-        return sensorsDetectsNewBlockage()
+
+        return newBlockage
     }
 
     /** Returns true if position has changed */
@@ -182,6 +201,7 @@ class Robot(
         for (sensor in sensors) {
             val sensorOrientation = Direction.fromInt(orientation.ordinal + sensor.ordinal)
             detectedBlockages = detectedBlockages || sensorDetection(sensorOrientation, sensor)
+            scansCounter++
         }
         return detectedBlockages
     }
