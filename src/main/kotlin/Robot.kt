@@ -7,15 +7,15 @@ class Robot(
     val goal: Cell = Cell((sizeOfWorld - 1), 0, 0),
     var orientation: Direction = Direction.NORTH,
     val sensorRange: Int = 4,
-    val sensors: List<Direction> = listOf(Direction.NORTH)
+    val sensors: List<Direction> = listOf(Direction.NORTH),
+    val realWorld: Array<BooleanArray> = Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
 ) {
     var path = mutableListOf<Cell>()
     val pathTravelled = mutableListOf<Cell>()
-    val realWorld =
-        Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
+
 
     //World of obstacles, true if is blocked
-    val knownWorld = Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
+    var knownWorld = Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
 
     //Map costs to get to goal
     var costMap =
@@ -235,7 +235,7 @@ class Robot(
         Direction.SOUTH_EAST -> Cell(position.x + i, position.y + i)
     }
 
-    fun printStats(prefix : String){
+    fun printStats(prefix: String) {
         println("$prefix : $turnsCounter turns, $scansCounter scans, $distanceTravelled cells travelled")
     }
 }
