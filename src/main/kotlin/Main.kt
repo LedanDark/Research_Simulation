@@ -5,7 +5,8 @@ fun main() {
     val worlds = listOf(
         readMapFromFile(File("first.map")),
         readMapFromFile(File("second.map")),
-        readMapFromFile(File("third.map"))
+        readMapFromFile(File("third.map")),
+        readMapFromFile(File("fourth.map"))
     )
     worlds.forEachIndexed { index, map ->
         println("Map : $index")
