@@ -6,47 +6,47 @@ fun main() {
         readMapFromFile(File("first.map")),
         readMapFromFile(File("second.map")),
         readMapFromFile(File("third.map")),
-        readMapFromFile(File("fourth.map"))
-//        readMapFromFile(File("fifth.map")),
+        readMapFromFile(File("fourth.map"))/*,
+        readMapFromFile(File("fifth.map"))*/
     )
     worlds.forEachIndexed { index, map ->
         println("Map : ${index+1}")
         val listOfRobots = listOf(
-            Robot(map.size, realWorld = map),
+            Robot(realWorld = map),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, SOUTH)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, SOUTH, EAST, WEST)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, NORTH_EAST, NORTH_WEST)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, NORTH_EAST, EAST, NORTH_WEST, WEST)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, EAST, WEST)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, SOUTH_EAST, SOUTH_WEST)
             ),
             Robot(
-                map.size, realWorld = map,
+                realWorld = map,
                 sensors = listOf(NORTH, NORTH_EAST, SOUTH, NORTH_WEST)
             )
         )

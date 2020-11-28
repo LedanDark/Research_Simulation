@@ -4,15 +4,14 @@ import kotlin.math.abs
 import kotlin.math.max
 
 class Robot(
-//    val sizeOfWorld: Int = 10,
-    val worldWidth : Int= 10,
-    val worldHeight: Int = 10,
-    val goal: Cell = Cell((worldWidth - 1), 0, 0),
+    val realWorld: Array<BooleanArray>,
     var orientation: Direction = NORTH,
     val sensorRange: Int = 4,
-    val sensors: List<Direction> = listOf(NORTH),
-    val realWorld: Array<BooleanArray> = Array(worldHeight) { BooleanArray(worldWidth) { false } }
+    val sensors: List<Direction> = listOf(NORTH)
 ) {
+    val worldHeight: Int = realWorld.size
+    val worldWidth : Int= realWorld[0].size
+    val goal: Cell = Cell((worldWidth - 1), 0, 0)
     var path = mutableListOf<Cell>()
     val pathTravelled = mutableListOf<Cell>()
 
