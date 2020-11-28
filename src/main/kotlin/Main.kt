@@ -53,6 +53,7 @@ fun main() {
             rob.travel(false)
             println("-----------------------------------")
             rob.printStats()
+            rob.printFinalMap()
         }
         println()
         println()

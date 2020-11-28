@@ -44,8 +44,8 @@ class Robot(
 
     //A star stuff
     fun calculateStarPath(): List<Cell> {
-        costMap[position.y][position.x] = 0
         resetCostmap()
+        costMap[position.y][position.x] = 0
         val openQueue = PriorityQueue<Cell> { a, b -> a.cost - b.cost }
         openQueue.addNeighbours(position)
         while (openQueue.isNotEmpty()) {
@@ -212,7 +212,7 @@ class Robot(
             if (realWorld.isBlocked(nextCell.x, nextCell.y)) {
                 return if (knownWorld.isClear(nextCell.x, nextCell.y)) {
                     knownWorld[nextCell.y][nextCell.x] = true
-                   // println("Detected blockage at (${nextCell.x},${nextCell.y}), from ${position.x}, ${position.y}, ${orientation} , sensor = ${sensor}")
+                    // println("Detected blockage at (${nextCell.x},${nextCell.y}), from ${position.x}, ${position.y}, ${orientation} , sensor = ${sensor}")
                     true
                 } else {
                     //no update, and cant see in this direction anmyore.
@@ -234,7 +234,8 @@ class Robot(
         SOUTH_WEST -> Cell(position.x - i, position.y + i)
         SOUTH_EAST -> Cell(position.x + i, position.y + i)
     }
-    fun getSensorConfig() : String{
+
+    fun getSensorConfig(): String {
         var output = ""
         sensors.forEach { dir ->
             output += when (dir) {
@@ -247,12 +248,41 @@ class Robot(
                 WEST -> "W"
                 NORTH_WEST -> "NW"
             }
-            output +="_"
+            output += "_"
         }
         return output
     }
+
     fun printStats(prefix: String = getSensorConfig()) {
         println("$prefix : $turnsCounter turns, $scansCounter scans, $distanceTravelled cells travelled")
         println(pathTravelled)
+    }
+
+    fun printFinalMap(prefix: String = getSensorConfig()) {
+        println(prefix)
+        realWorld.forEachIndexed { y, row ->
+            row.forEachIndexed { x, column ->
+                val cell = Cell(x, y)
+                when {
+                    knownWorld[y][x] -> {
+                        print('2')
+                    }
+                    column -> {
+                        print('1')
+                    }
+                    pathTravelled.contains(cell) -> {
+                        print('X')
+                    }
+                    goal == cell -> {
+                        print('X')
+                    }
+                    else -> {
+                        print('0')
+                    }
+                }
+
+            }
+            println()
+        }
     }
 }
