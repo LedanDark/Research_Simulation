@@ -4,26 +4,28 @@ import kotlin.math.abs
 import kotlin.math.max
 
 class Robot(
-    val sizeOfWorld: Int = 10,
-    val goal: Cell = Cell((sizeOfWorld - 1), 0, 0),
+//    val sizeOfWorld: Int = 10,
+    val worldWidth : Int= 10,
+    val worldHeight: Int = 10,
+    val goal: Cell = Cell((worldWidth - 1), 0, 0),
     var orientation: Direction = NORTH,
     val sensorRange: Int = 4,
     val sensors: List<Direction> = listOf(NORTH),
-    val realWorld: Array<BooleanArray> = Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
+    val realWorld: Array<BooleanArray> = Array(worldHeight) { BooleanArray(worldWidth) { false } }
 ) {
     var path = mutableListOf<Cell>()
     val pathTravelled = mutableListOf<Cell>()
 
 
     //World of obstacles, true if is blocked
-    var knownWorld = Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
+    var knownWorld = Array(worldHeight) { BooleanArray(worldWidth) { false } }
 
     //Map costs to get to goal
     var costMap =
-        Array(sizeOfWorld) { y -> IntArray(sizeOfWorld) { x -> if (x == goal.x && y == goal.y) 0 else Int.MAX_VALUE } }
+        Array(worldHeight) { y -> IntArray(worldWidth) { x -> if (x == goal.x && y == goal.y) 0 else Int.MAX_VALUE } }
 
     // Position 0,0 has a wall on it.
-    var position = Cell(0, (sizeOfWorld - 1), 0)
+    var position = Cell(0, (worldHeight - 1), 0)
     var distanceTravelled = 0
     var turnsCounter = 0
     var scansCounter = 0
@@ -39,7 +41,7 @@ class Robot(
 
     fun resetCostmap() {
         costMap =
-            Array(sizeOfWorld) { y -> IntArray(sizeOfWorld) { x -> if (x == goal.x && y == goal.y) 0 else Int.MAX_VALUE } }
+            Array(worldHeight) { y -> IntArray(worldWidth) { x -> if (x == goal.x && y == goal.y) 0 else Int.MAX_VALUE } }
     }
 
     //A star stuff

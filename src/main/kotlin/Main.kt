@@ -7,9 +7,10 @@ fun main() {
         readMapFromFile(File("second.map")),
         readMapFromFile(File("third.map")),
         readMapFromFile(File("fourth.map"))
+//        readMapFromFile(File("fifth.map")),
     )
     worlds.forEachIndexed { index, map ->
-        println("Map : $index")
+        println("Map : ${index+1}")
         val listOfRobots = listOf(
             Robot(map.size, realWorld = map),
             Robot(
