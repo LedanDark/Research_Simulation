@@ -1,3 +1,4 @@
+import Direction.*
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.max
@@ -5,9 +6,9 @@ import kotlin.math.max
 class Robot(
     val sizeOfWorld: Int = 10,
     val goal: Cell = Cell((sizeOfWorld - 1), 0, 0),
-    var orientation: Direction = Direction.NORTH,
+    var orientation: Direction = NORTH,
     val sensorRange: Int = 4,
-    val sensors: List<Direction> = listOf(Direction.NORTH),
+    val sensors: List<Direction> = listOf(NORTH),
     val realWorld: Array<BooleanArray> = Array(sizeOfWorld) { BooleanArray(sizeOfWorld) { false } }
 ) {
     var path = mutableListOf<Cell>()
@@ -145,7 +146,7 @@ class Robot(
             calculateStarPath()
             next = path.removeAt(0)
         }
-        move(next)// TODO : Need to turn to this direction first....
+        move(next)
         if (sensorsDetectsNewBlockage()) {
             resetCostmap()
             calculateStarPath()
@@ -157,7 +158,6 @@ class Robot(
         var newBlockage = false
         if (orientation != newDirection) {
             //Math.floorMod(diff,
-            //TODO, IMPLEMENT stepwise turning.
             val clockwiseDistance = Math.floorMod(newDirection.ordinal - orientation.ordinal, Direction.numDirections)
             val turningStep = if (clockwiseDistance <= 4) {
                 //println("Turning clockwise, $orientation -> $newDirection")
@@ -225,17 +225,33 @@ class Robot(
 
     fun cellAtDistance(i: Int, dir: Direction): Cell = when (dir) {
         //South is down, so positive y
-        Direction.NORTH -> Cell(position.x, position.y - i)
-        Direction.SOUTH -> Cell(position.x, position.y + i)
-        Direction.WEST -> Cell(position.x - i, position.y)
-        Direction.EAST -> Cell(position.x + i, position.y)
-        Direction.NORTH_WEST -> Cell(position.x - i, position.y - i)
-        Direction.NORTH_EAST -> Cell(position.x + i, position.y - i)
-        Direction.SOUTH_WEST -> Cell(position.x - i, position.y + i)
-        Direction.SOUTH_EAST -> Cell(position.x + i, position.y + i)
+        NORTH -> Cell(position.x, position.y - i)
+        SOUTH -> Cell(position.x, position.y + i)
+        WEST -> Cell(position.x - i, position.y)
+        EAST -> Cell(position.x + i, position.y)
+        NORTH_WEST -> Cell(position.x - i, position.y - i)
+        NORTH_EAST -> Cell(position.x + i, position.y - i)
+        SOUTH_WEST -> Cell(position.x - i, position.y + i)
+        SOUTH_EAST -> Cell(position.x + i, position.y + i)
     }
-
-    fun printStats(prefix: String) {
+    fun getSensorConfig() : String{
+        var output = ""
+        sensors.forEach { dir ->
+            output += when (dir) {
+                NORTH -> "N"
+                NORTH_EAST -> "NE"
+                EAST -> "E"
+                SOUTH_EAST -> "SE"
+                SOUTH -> "S"
+                SOUTH_WEST -> "SW"
+                WEST -> "W"
+                NORTH_WEST -> "NW"
+            }
+            output +="_"
+        }
+        return output
+    }
+    fun printStats(prefix: String = getSensorConfig()) {
         println("$prefix : $turnsCounter turns, $scansCounter scans, $distanceTravelled cells travelled")
     }
 }
