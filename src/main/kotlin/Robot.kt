@@ -55,7 +55,7 @@ class Robot(
             }
         }
         path = backTrackPath()
-        println("Calculating shortest path... ->$path")
+        //println("Calculating shortest path... ->$path")
         return path
     }
 
@@ -212,7 +212,7 @@ class Robot(
             if (realWorld.isBlocked(nextCell.x, nextCell.y)) {
                 return if (knownWorld.isClear(nextCell.x, nextCell.y)) {
                     knownWorld[nextCell.y][nextCell.x] = true
-                    println("Detected blockage at (${nextCell.x},${nextCell.y}), from ${position.x}, ${position.y}, ${orientation} , sensor = ${sensor}")
+                   // println("Detected blockage at (${nextCell.x},${nextCell.y}), from ${position.x}, ${position.y}, ${orientation} , sensor = ${sensor}")
                     true
                 } else {
                     //no update, and cant see in this direction anmyore.
@@ -253,5 +253,6 @@ class Robot(
     }
     fun printStats(prefix: String = getSensorConfig()) {
         println("$prefix : $turnsCounter turns, $scansCounter scans, $distanceTravelled cells travelled")
+        println(pathTravelled)
     }
 }

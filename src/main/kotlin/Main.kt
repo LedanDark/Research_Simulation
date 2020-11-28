@@ -2,54 +2,67 @@ import Direction.*
 import java.io.File
 
 fun main() {
-
-    val firstWorld = readMapFromFile(File("first.map"))
-    val robotKnowsPath = Robot(firstWorld.size)
-    robotKnowsPath.knownWorld = firstWorld
-
-    val listOfRobots = listOf(
-        Robot(firstWorld.size),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, SOUTH)
-        ),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, SOUTH, EAST, WEST)
-        ),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, NORTH_EAST, NORTH_WEST)
-        ),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST)
-        ),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST)
-        ),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, NORTH_EAST, EAST, NORTH_WEST,  WEST)
-        ),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, EAST, WEST)
-        ),
-        Robot(
-            firstWorld.size, realWorld = firstWorld,
-            sensors = listOf(NORTH, SOUTH_EAST, SOUTH_WEST)
-        )
+    val worlds = listOf(
+        readMapFromFile(File("first.map")),
+        readMapFromFile(File("second.map"))
     )
+    worlds.forEachIndexed { index, map ->
+        println("Map : $index")
 
-    robotKnowsPath.calculateStarPath()
-    robotKnowsPath.travel()
-    listOfRobots.forEach { rob ->
-        rob.calculateStarPath()
-        rob.travel(false)
-        println("-----------------------------------")
-        rob.printStats()
+//        val robotKnowsPath = Robot(map.size, realWorld = map)
+//        robotKnowsPath.knownWorld = map
+
+        val listOfRobots = listOf(
+            Robot(map.size, realWorld = map),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, SOUTH)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, SOUTH, EAST, WEST)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, NORTH_EAST, NORTH_WEST)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, NORTH_EAST, NORTH_WEST, SOUTH_EAST, SOUTH_WEST)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, NORTH_EAST, EAST, SOUTH_EAST, SOUTH, SOUTH_WEST, WEST, NORTH_WEST)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, NORTH_EAST, EAST, NORTH_WEST, WEST)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, EAST, WEST)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, SOUTH_EAST, SOUTH_WEST)
+            ),
+            Robot(
+                map.size, realWorld = map,
+                sensors = listOf(NORTH, NORTH_EAST, SOUTH, NORTH_WEST)
+            )
+        )
+
+//        robotKnowsPath.calculateStarPath()
+//        robotKnowsPath.travel()
+//        robotKnowsPath.printStats("Knows path")
+        listOfRobots.forEach { rob ->
+            rob.calculateStarPath()
+            rob.travel(false)
+            println("-----------------------------------")
+            rob.printStats()
+        }
+        println()
+        println()
     }
 }
 
