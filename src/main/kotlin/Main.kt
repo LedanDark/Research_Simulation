@@ -4,14 +4,11 @@ import java.io.File
 fun main() {
     val worlds = listOf(
         readMapFromFile(File("first.map")),
-        readMapFromFile(File("second.map"))
+        readMapFromFile(File("second.map")),
+        readMapFromFile(File("third.map"))
     )
     worlds.forEachIndexed { index, map ->
         println("Map : $index")
-
-//        val robotKnowsPath = Robot(map.size, realWorld = map)
-//        robotKnowsPath.knownWorld = map
-
         val listOfRobots = listOf(
             Robot(map.size, realWorld = map),
             Robot(
@@ -51,10 +48,6 @@ fun main() {
                 sensors = listOf(NORTH, NORTH_EAST, SOUTH, NORTH_WEST)
             )
         )
-
-//        robotKnowsPath.calculateStarPath()
-//        robotKnowsPath.travel()
-//        robotKnowsPath.printStats("Knows path")
         listOfRobots.forEach { rob ->
             rob.calculateStarPath()
             rob.travel(false)
