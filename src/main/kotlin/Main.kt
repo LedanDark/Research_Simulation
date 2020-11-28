@@ -52,9 +52,9 @@ fun main() {
         listOfRobots.forEach { rob ->
             rob.calculateStarPath()
             rob.travel(false)
-            println("-----------------------------------")
+//            println("-----------------------------------")
             rob.printStats()
-            rob.printFinalMap()
+//            rob.printFinalMap()
         }
         println()
         println()

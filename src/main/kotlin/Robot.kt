@@ -254,8 +254,7 @@ class Robot(
     }
 
     fun printStats(prefix: String = getSensorConfig()) {
-        println("$prefix : $turnsCounter turns, $scansCounter scans, $distanceTravelled cells travelled")
-        println(pathTravelled)
+        println("$prefix,$turnsCounter,$scansCounter,$distanceTravelled")
     }
 
     fun printFinalMap(prefix: String = getSensorConfig()) {
